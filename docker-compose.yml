@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "8000:8000"
+      - "15400:8000"
     volumes:
       - .:/app
       - staticfiles:/app/staticfiles
@@ -27,7 +27,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "15401:5432"
 
   redis:
     image: redis:7-alpine
@@ -35,12 +35,12 @@ services:
     volumes:
       - redis_data:/data
     ports:
-      - "6379:6379"
+      - "15402:6379"
 
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
+      - "15403:80"
     volumes:
       - staticfiles:/static:ro
       - media:/media:ro
