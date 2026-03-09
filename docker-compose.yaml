@@ -3,6 +3,8 @@ services:
     build: .
     expose:
       - "8000"
+    healthcheck:
+      disable: true
     volumes:
       - staticfiles:/app/staticfiles
       - media:/app/media
