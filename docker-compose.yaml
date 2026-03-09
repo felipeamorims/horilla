@@ -7,12 +7,18 @@ services:
       - staticfiles:/app/staticfiles
       - media:/app/media
     environment:
-      - DEBUG=${DEBUG:-0}
+      - DEBUG=${DEBUG:-False}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
-      - DATABASE_URL=${DATABASE_URL}
+      - DB_ENGINE=${DB_ENGINE:-django.db.backends.postgresql}
+      - DB_NAME=${DB_NAME:-horilla_main}
+      - DB_USER=${DB_USER:-horilla}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=5432
       - REDIS_URL=${REDIS_URL}
+      - DB_INIT_PASSWORD=${DB_INIT_PASSWORD}
     depends_on:
       db:
         condition: service_healthy
@@ -23,14 +29,14 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: horilla
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_NAME:-horilla_main}
+      POSTGRES_USER: ${DB_USER:-horilla}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-horilla_user}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-horilla}"]
       interval: 10s
       timeout: 5s
       retries: 5
