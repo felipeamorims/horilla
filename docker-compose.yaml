@@ -2,7 +2,7 @@ services:
   web:
     build: .
     expose:
-      - "15400"
+      - "8000"
     volumes:
       - staticfiles:/app/staticfiles
       - media:/app/media
