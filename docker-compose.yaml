@@ -23,13 +23,13 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-horilla_db}
-      POSTGRES_USER: ${POSTGRES_USER:-horilla_user}
+      POSTGRES_DB: ${POSTGRES_DB:-ecotec_db}
+      POSTGRES_USER: ${POSTGRES_USER:-ecotec_user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-horilla_user}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ecotec_user}"]
       interval: 10s
       timeout: 5s
       retries: 5
